@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gem Categories - GEM ENCYCLOPEDIA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Additional styles for categories page */
+        .categories-page {
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        .search-container {
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 0.95rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            color: #e91e63;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-gem"></i>
+                <h1>GEM ENCYCLOPEDIA</h1>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="categories.html" class="active">Categories</a>
+                <a href="index.html#about">About</a>
+                <a href="community.html">Community</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="categories-page">
+        <div class="section-container">
+            <h1 class="page-title">Gem Categories</h1>
+            
+            <!-- Category Filters -->
+            <div class="category-filters">
+                <!-- Will be populated dynamically -->
+            </div>
+
+            <!-- Search Box -->
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="gem-search" placeholder="Search gems...">
+                </div>
+            </div>
+
+            <!-- Gems Display -->
+            <div class="gem-grid" id="gem-display">
+                <!-- Will be populated dynamically -->
+            </div>
+
+            <!-- No Results Message -->
+            <div id="no-results" class="no-results">
+                <i class="fas fa-gem"></i>
+                <p>No gems found matching your search.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="logo">
+                    <i class="fas fa-gem"></i>
+                    <h2>GEM ENCYCLOPEDIA</h2>
+                </div>
+                <p>Your comprehensive guide to the world of gemstones.</p>
+            </div>
+            <div class="footer-links">
+                <div class="link-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="community.html">Community</a></li>
+                    </ul>
+                </div>
+                <div class="link-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="what-is-gem.html">What is a Gem?</a></li>
+                        <li><a href="refractive-indices.html">Refractive Indices</a></li>
+                        <li><a href="synthetic-stones.html">Synthetic Stones</a></li>
+                        <li><a href="absorption-spectrum.html">Absorption Spectrum</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 GEM ENCYCLOPEDIA | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="database.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof DB !== 'undefined') {
+                DB.initialize();
+                loadGemsAndCategories();
+            }
+
+            // Search functionality
+            const searchInput = document.getElementById('gem-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    const gems = DB.searchGems(searchTerm);
+                    updateGemDisplay(gems);
+                });
+            }
+        });
+
+        function loadGemsAndCategories() {
+            const gems = DB.getGems();
+            const categories = DB.getCategories();
+            
+            updateCategoryFilters(categories);
+            updateGemDisplay(gems);
+        }
+
+        function updateCategoryFilters(categories) {
+            const filterContainer = document.querySelector('.category-filters');
+            if (!filterContainer) return;
+
+            filterContainer.innerHTML = `
+                <button class="filter-btn active" data-filter="all">All Gems</button>
+                ${categories.map(category => `
+                    <button class="filter-btn" data-filter="${category.name.toLowerCase()}">
+                        ${category.name}
+                    </button>
+                `).join('')}
+            `;
+
+            // Add click handlers for filter buttons
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const filterValue = this.getAttribute('data-filter');
+                    const gems = filterValue === 'all' ? 
+                        DB.getGems() : 
+                        DB.getGemsByCategory(filterValue);
+                    
+                    updateGemDisplay(gems);
+                });
+            });
+        }
+
+        function updateGemDisplay(gems) {
+            const gemGrid = document.getElementById('gem-display');
+            const noResults = document.getElementById('no-results');
+            
+            if (!gemGrid || !noResults) return;
+
+            if (gems.length === 0) {
+                gemGrid.style.display = 'none';
+                noResults.style.display = 'flex';
+                return;
+            }
+
+            gemGrid.style.display = 'grid';
+            noResults.style.display = 'none';
+
+            gemGrid.innerHTML = gems.map(gem => `
+                <div class="gem-card" data-category="${gem.category.toLowerCase()}">
+                    <div class="gem-image">
+                        <img src="${gem.image}" alt="${gem.name}" onerror="this.src='images/default-gem.jpg'">
+                    </div>
+                    <div class="gem-info">
+                        <h3>${gem.name}</h3>
+                        <p class="gem-property">Hardness: ${gem.hardness} Mohs</p>
+                        <p class="gem-property">Crystal System: ${gem.crystalSystem}</p>
+                        <p class="gem-description">${gem.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Listen for updates from admin panel
+        window.addEventListener('adminDataUpdated', function() {
+            loadGemsAndCategories();
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - GEM ENCYCLOPEDIA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #e91e63;
+            --secondary-color: #2196f3;
+            --text-color: #333;
+            --bg-color: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.1), rgba(33, 150, 243, 0.1));
+            padding: 20px;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            animation: slideIn 0.5s ease;
+        }
+
+        .form-header {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .form-header .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-header i {
+            font-size: 3rem;
+            animation: sparkle 2s infinite;
+        }
+
+        .form-header h1 {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .role-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            background: white;
+            border-bottom: 1px solid #eee;
+        }
+
+        .role-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .role-btn.active {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+        }
+
+        .form-content {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            padding-right: 45px;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
+            outline: none;
+        }
+
+        .form-group i {
+            position: absolute;
+            right: 15px;
+            top: 45px;
+            color: #999;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus + i {
+            color: var(--primary-color);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .form-container {
+                margin: 20px;
+            }
+
+            .form-header i {
+                font-size: 2.5rem;
+            }
+
+            .form-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .role-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <div class="logo">
+                <i class="fas fa-gem"></i>
+                <h1>GEM ENCYCLOPEDIA</h1>
+            </div>
+            <p>Admin Login</p>
+        </div>
+
+        <!-- Role Selection -->
+        <div class="role-selector">
+            <button class="role-btn active" onclick="switchRole('superadmin')">Super Admin</button>
+            <button class="role-btn" onclick="switchRole('admin')">Admin</button>
+        </div>
+
+        <!-- Super Admin Login Form -->
+        <div id="superadmin-form" class="form-content">
+            <form onsubmit="return handleSuperAdminLogin(event)">
+                <div class="form-group">
+                    <label for="superadmin-username">Username</label>
+                    <input type="text" id="superadmin-username" required>
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="form-group">
+                    <label for="superadmin-password">Password</label>
+                    <input type="password" id="superadmin-password" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="error-message" id="superadmin-error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Invalid credentials</span>
+                </div>
+                <button type="submit" class="submit-btn">Login as Super Admin</button>
+            </form>
+        </div>
+
+        <!-- Admin Login Form -->
+        <div id="admin-form" class="form-content" style="display: none;">
+            <form onsubmit="return handleAdminLogin(event)">
+                <div class="form-group">
+                    <label for="admin-username">Username</label>
+                    <input type="text" id="admin-username" required>
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="error-message" id="admin-error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Invalid credentials</span>
+                </div>
+                <button type="submit" class="submit-btn">Login as Admin</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="database.js"></script>
+    <script>
+        // Switch between super admin and admin forms
+        function switchRole(role) {
+            const superadminForm = document.getElementById('superadmin-form');
+            const adminForm = document.getElementById('admin-form');
+            const buttons = document.querySelectorAll('.role-btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (role === 'superadmin') {
+                superadminForm.style.display = 'block';
+                adminForm.style.display = 'none';
+            } else {
+                superadminForm.style.display = 'none';
+                adminForm.style.display = 'block';
+            }
+
+            // Hide any error messages
+            document.querySelectorAll('.error-message').forEach(msg => {
+                msg.style.display = 'none';
+            });
+        }
+
+        // Handle super admin login
+        function handleSuperAdminLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('superadmin-username').value;
+            const password = document.getElementById('superadmin-password').value;
+            const errorMessage = document.getElementById('superadmin-error');
+
+            // Initialize database if not already initialized
+            if (typeof DB !== 'undefined') {
+                DB.initialize();
+            }
+
+            // Get administrators from database
+            const administrators = DB.getAdministrators();
+            const admin = administrators.find(a => 
+                a.username === username && 
+                a.password === password && 
+                a.role === 'superadmin'
+            );
+
+            if (admin) {
+                // Store admin status
+                localStorage.setItem('adminAuth', JSON.stringify({
+                    isAdmin: true,
+                    role: 'superadmin',
+                    username: admin.username,
+                    id: admin.id
+                }));
+
+                // Update last login
+                DB.updateAdministrator(admin.id, {
+                    ...admin,
+                    lastLogin: new Date().toISOString()
+                });
+
+                // Redirect to admin panel
+                window.location.href = 'admin.html';
+            } else {
+                errorMessage.style.display = 'flex';
+            }
+            return false;
+        }
+
+        // Handle admin login
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('admin-username').value;
+            const password = document.getElementById('admin-password').value;
+            const errorMessage = document.getElementById('admin-error');
+
+            // Initialize database if not already initialized
+            if (typeof DB !== 'undefined') {
+                DB.initialize();
+            }
+
+            // Get administrators from database
+            const administrators = DB.getAdministrators();
+            const admin = administrators.find(a => 
+                a.username === username && 
+                a.password === password && 
+                a.role === 'admin'
+            );
+
+            if (admin) {
+                // Store admin status
+                localStorage.setItem('adminAuth', JSON.stringify({
+                    isAdmin: true,
+                    role: 'admin',
+                    username: admin.username,
+                    id: admin.id
+                }));
+
+                // Update last login
+                DB.updateAdministrator(admin.id, {
+                    ...admin,
+                    lastLogin: new Date().toISOString()
+                });
+
+                // Redirect to admin panel
+                window.location.href = 'admin.html';
+            } else {
+                errorMessage.style.display = 'flex';
+            }
+            return false;
+        }
+
+        // Check if already logged in
+        window.onload = function() {
+            const adminAuth = localStorage.getItem('adminAuth');
+            if (adminAuth) {
+                const auth = JSON.parse(adminAuth);
+                if (auth.isAdmin) {
+                    window.location.href = 'admin.html';
+                }
+            }
+
+            // Initialize database if not already initialized
+            if (typeof DB !== 'undefined') {
+                DB.initialize();
+            }
+        }
+    </script>
+</body>
+</html> 

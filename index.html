@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEM ENCYCLOPEDIA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loading">
+        <i class="fas fa-gem"></i>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-gem"></i>
+                <h1>GEM ENCYCLOPEDIA</h1>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="categories.html">Categories</a>
+                <a href="index.html#about">About</a>
+                <a href="community.html">Community</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home">
+            <h1>Discover the World of <span>Precious Gems</span></h1>
+            <p>Explore our comprehensive collection of magnificent gemstones</p>
+            <a href="categories.html" class="cta-button">Start Exploring</a>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" style="display: none;">
+            <div class="section-container">
+                <h2 class="section-title">About GEM ENCYCLOPEDIA</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Welcome to GEM ENCYCLOPEDIA, your comprehensive guide to the fascinating world of gemstones. Our mission is to provide detailed, accurate information about various gems and their properties.</p>
+                        
+                        <!-- Direct Resource Links -->
+                        <div class="resources-grid">
+                            <a href="what-is-gem.html" class="resource-link">
+                                <div class="resource-icon">
+                                    <i class="fas fa-gem"></i>
+                                </div>
+                                <h3>What is a GEM?</h3>
+                                <div class="resource-hover">
+                                    <span>Explore the basics of gemology</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </a>
+
+                            <a href="refractive-indices.html" class="resource-link">
+                                <div class="resource-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h3>REFRACTIVE INDICES TABLE</h3>
+                                <div class="resource-hover">
+                                    <span>Light interaction properties</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </a>
+
+                            <a href="synthetic-stones.html" class="resource-link">
+                                <div class="resource-icon">
+                                    <i class="fas fa-flask"></i>
+                                </div>
+                                <h3>SYNTHETIC STONES</h3>
+                                <div class="resource-hover">
+                                    <span>Lab-created gemstones guide</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </a>
+
+                            <a href="absorption-spectrum.html" class="resource-link">
+                                <div class="resource-icon">
+                                    <i class="fas fa-rainbow"></i>
+                                </div>
+                                <h3>ABSORPTION SPECTRUM</h3>
+                                <div class="resource-hover">
+                                    <span>Color and light absorption</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" style="display: none;">
+            <!-- Content will be loaded here dynamically -->
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" style="display: none;">
+            <div class="section-container">
+                <h2>Get in Touch</h2>
+                <div class="contact-wrapper">
+                    <!-- Contact Form -->
+                    <div class="contact-form-container">
+                        <form class="contact-form">
+                            <div class="form-header">
+                                <h3>Send us a Message</h3>
+                                <p>Have questions? We'd love to hear from you.</p>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">
+                                        <i class="fas fa-user"></i>
+                                        Your Name
+                                    </label>
+                                    <input type="text" id="name" required placeholder="John Doe">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="email">
+                                        <i class="fas fa-envelope"></i>
+                                        Your Email
+                                    </label>
+                                    <input type="email" id="email" required placeholder="john@example.com">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="subject">
+                                    <i class="fas fa-tag"></i>
+                                    Subject
+                                </label>
+                                <input type="text" id="subject" required placeholder="How can we help?">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">
+                                    <i class="fas fa-comment-alt"></i>
+                                    Message
+                                </label>
+                                <textarea id="message" required placeholder="Tell us about your inquiry..."></textarea>
+                            </div>
+
+                            <button type="submit" class="submit-btn">
+                                <span>Send Message</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="creative-footer">
+        <div class="footer-waves">
+            <div class="wave" id="wave1"></div>
+            <div class="wave" id="wave2"></div>
+            <div class="wave" id="wave3"></div>
+            <div class="wave" id="wave4"></div>
+        </div>
+
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="gem-icon">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <h2>GEM ENCYCLOPEDIA</h2>
+                <p>Discover the World of Precious Gems</p>
+            </div>
+
+            <div class="footer-links">
+                <div class="link-column">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#categories">Categories</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="community.html">Community</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="link-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="what-is-gem.html">What is a Gem?</a></li>
+                        <li><a href="refractive-indices.html">Refractive Indices</a></li>
+                        <li><a href="synthetic-stones.html">Synthetic Stones</a></li>
+                        <li><a href="absorption-spectrum.html">Absorption Spectrum</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 GEM ENCYCLOPEDIA | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
