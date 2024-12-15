@@ -1,0 +1,3 @@
+Super admin credentioals
+Username : user
+Password : admin@321
